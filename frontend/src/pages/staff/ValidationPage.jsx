@@ -277,7 +277,7 @@ function resolveResult(response, error, errorStatus) {
 }
 
 // ─── QR Cooldown ─────────────────────────────────────────────────────────────
-const QR_COOLDOWN_MS = 3000;
+const QR_COOLDOWN_MS = 3001;
 
 // ─── QR Scanner component ────────────────────────────────────────────────────
 function QrScanner({ onScan, onError }) {
