@@ -1,0 +1,117 @@
+/* ─────────────────────────────────────────────────────────────────
+   variables.css — Design tokens for Ticket Platform
+   Theme: Refined dark / editorial with warm amber accent
+───────────────────────────────────────────────────────────────── */
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=DM+Mono:wght@400;500&family=Playfair+Display:wght@600;700&display=swap');
+
+:root {
+  /* --- Backgrounds --- */
+  --bg:        #0e0e0f;
+  --surface:   #161618;
+  --surface-2: #1e1e21;
+  --surface-3: #28282c;
+
+  /* --- Navbar (uses semi-transparent for frosted glass effect) --- */
+  --nav-bg: rgba(14, 14, 15, 0.90);
+
+  /* --- Borders --- */
+  --border:   #2a2a2e;
+  --border-2: #363639;
+
+  /* --- Text --- */
+  --text:   #f0ede8;
+  --text-2: #7a7880;
+  --text-3: #46444d;
+
+  /* --- Accent (warm amber) --- */
+  --accent:      #e8a046;
+  --accent-dim:  rgba(232, 160, 70, 0.12);
+  --accent-text: #0e0e0f;
+
+  /* --- Status --- */
+  --success:    #4caf7d;
+  --success-bg: rgba(76, 175, 125, 0.10);
+  --error:      #e05555;
+  --error-bg:   rgba(224, 85, 85, 0.10);
+  --warning:    #e8a046;
+  --warning-bg: rgba(232, 160, 70, 0.10);
+  --info:       #5c9de8;
+  --info-bg:    rgba(92, 157, 232, 0.10);
+
+  /* --- Layout --- */
+  --sidebar-w:  230px;
+  --sidebar-bg: #0b0b0c;
+  --topbar-h:   52px;
+
+  /* --- Typography --- */
+  --font:         'DM Sans', sans-serif;
+  --font-mono:    'DM Mono', monospace;
+  --font-display: 'Playfair Display', serif;
+
+  /* --- Spacing (8-pt grid) --- */
+  --s1: 4px;
+  --s2: 8px;
+  --s3: 12px;
+  --s4: 16px;
+  --s5: 24px;
+  --s6: 32px;
+  --s7: 48px;
+  --s8: 64px;
+
+  /* --- Radius --- */
+  --r1: 3px;
+  --r2: 6px;
+  --r3: 10px;
+
+  /* --- Shadows --- */
+  --shadow-sm: 0 1px 4px rgba(0,0,0,0.5);
+  --shadow-md: 0 4px 16px rgba(0,0,0,0.55);
+  --shadow-lg: 0 8px 32px rgba(0,0,0,0.6);
+
+  /* --- Transitions --- */
+  --t-fast: 0.12s ease;
+  --t-med:  0.2s ease;
+}
+
+/* ─────────────────────────────────────────────────────────────────
+   Light theme overrides — applied when <html data-theme="light">
+   All other tokens (accent, status colours, spacing, fonts) inherit
+   from :root and stay the same in both themes.
+───────────────────────────────────────────────────────────────── */
+[data-theme="light"] {
+  /* Backgrounds — clean white */
+  --bg:        #ffffff;
+  --surface:   #ffffff;
+  --surface-2: #f4f4f5;
+  --surface-3: #ebebec;
+
+  /* Navbar — white with slight transparency */
+  --nav-bg: rgba(255, 255, 255, 0.92);
+
+  /* Borders */
+  --border:   #e4e4e7;
+  --border-2: #d1d1d6;
+
+  /* Text */
+  --text:   #09090b;
+  --text-2: #71717a;
+  --text-3: #a1a1aa;
+
+  /* Accent adjustments for light bg */
+  --accent-dim:  rgba(232, 160, 70, 0.15);
+  --accent-text: #ffffff;
+
+  /* Status backgrounds */
+  --success-bg: rgba(76, 175, 125, 0.12);
+  --error-bg:   rgba(224, 85, 85, 0.12);
+  --warning-bg: rgba(232, 160, 70, 0.12);
+  --info-bg:    rgba(92, 157, 232, 0.12);
+
+  /* Layout */
+  --sidebar-bg: #fafafa;
+
+  /* Shadows — subtle on white */
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.08);
+  --shadow-md: 0 4px 12px rgba(0,0,0,0.10);
+  --shadow-lg: 0 8px 24px rgba(0,0,0,0.12);
+}

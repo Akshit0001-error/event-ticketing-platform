@@ -1,0 +1,227 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ticket Confirmation</title>
+</head>
+
+<body style="margin:0;padding:0;background-color:#F4F4F5;font-family:Arial,Helvetica,sans-serif;">
+
+<table width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#F4F4F5">
+  <tr>
+    <td align="center" style="padding:30px 15px;">
+
+      <table width="600" cellpadding="0" cellspacing="0" border="0"
+             style="background:#ffffff;border-radius:10px;">
+
+        <!-- Header -->
+        <tr>
+          <td align="center"
+              style="background:#1A1A2E;padding:30px;border-radius:10px 10px 0 0;">
+            <h1 style="margin:0;color:#ffffff;font-size:24px;">
+              Ticket Platform
+            </h1>
+            <p style="margin-top:8px;color:#B0B3C7;font-size:14px;">
+              Your booking is confirmed
+            </p>
+          </td>
+        </tr>
+
+        <!-- Success Banner -->
+        <tr>
+          <td align="center"
+              style="background:#ECFDF5;padding:18px;border-bottom:1px solid #D1FAE5;">
+            <div style="font-size:24px;">✅</div>
+            <p style="margin:8px 0 0;color:#065F46;font-size:14px;font-weight:bold;">
+              Payment successful — your ticket is ready!
+            </p>
+          </td>
+        </tr>
+
+        <!-- Body -->
+        <tr>
+          <td style="padding:30px;">
+
+            <p style="font-size:16px;color:#111827;margin-top:0;">
+              Hi <strong th:text="${attendeeName}">Attendee</strong>,
+            </p>
+
+            <p style="font-size:14px;color:#4B5563;line-height:1.6;">
+              Thank you for your booking. Your ticket details are below.
+            </p>
+
+            <!-- Ticket Card -->
+            <table width="100%" cellpadding="0" cellspacing="0" border="0"
+                   style="border:1px dashed #D1D5DB;border-radius:8px;">
+
+              <!-- Event Header -->
+              <tr>
+                <td style="background:#F9FAFB;padding:18px;">
+                  <div style="font-size:20px;font-weight:bold;color:#111827;"
+                       th:text="${eventName}">
+                    Event Name
+                  </div>
+
+                  <div style="font-size:13px;color:#6B7280;margin-top:5px;"
+                       th:text="${eventVenue}">
+                    Venue
+                  </div>
+                </td>
+              </tr>
+
+              <!-- Details -->
+              <tr>
+                <td style="padding:20px;">
+
+                  <table width="100%" cellpadding="0" cellspacing="0">
+
+                    <tr>
+                      <td width="50%" style="padding-bottom:15px;">
+                        <div style="font-size:11px;color:#9CA3AF;text-transform:uppercase;">
+                          Date & Time
+                        </div>
+                        <div style="font-size:14px;color:#111827;font-weight:bold;"
+                             th:text="${eventStart}">
+                          Date
+                        </div>
+                      </td>
+
+                      <td width="50%" style="padding-bottom:15px;">
+                        <div style="font-size:11px;color:#9CA3AF;text-transform:uppercase;">
+                          Event Ends
+                        </div>
+                        <div style="font-size:14px;color:#111827;font-weight:bold;"
+                             th:text="${eventEnd}">
+                          End
+                        </div>
+                      </td>
+                    </tr>
+
+                    <tr>
+                      <td>
+                        <div style="font-size:11px;color:#9CA3AF;text-transform:uppercase;">
+                          Ticket Type
+                        </div>
+                        <div style="font-size:14px;color:#111827;font-weight:bold;"
+                             th:text="${ticketTypeName}">
+                          General
+                        </div>
+                      </td>
+
+                      <td>
+                        <div style="font-size:11px;color:#9CA3AF;text-transform:uppercase;">
+                          Amount Paid
+                        </div>
+                        <div style="font-size:14px;color:#111827;font-weight:bold;"
+                             th:text="${ticketPrice}">
+                          ₹0
+                        </div>
+                      </td>
+                    </tr>
+
+                  </table>
+
+                </td>
+              </tr>
+
+              <!-- QR Section -->
+              <tr>
+                <td align="center"
+                    style="padding:25px;background:#F9FAFB;border-top:1px dashed #D1D5DB;">
+
+                  <img th:src="'cid:' + ${qrCodeCid}"
+                       alt="QR Code"
+                       width="180"
+                       height="180"
+                       style="display:block;border:0;margin:auto;"/>
+
+                  <p style="margin-top:12px;font-size:13px;color:#6B7280;">
+                    Scan this QR code at the event entrance
+                  </p>
+
+                </td>
+              </tr>
+
+            </table>
+
+            <!-- Ticket ID -->
+            <table width="100%" cellpadding="0" cellspacing="0" border="0">
+              <tr>
+                <td align="center"
+                    style="padding:18px;margin-top:20px;">
+
+                  <div style="
+                            background:#F3F4F6;
+                            display:inline-block;
+                            padding:10px 18px;
+                            border-radius:6px;
+                            font-family:Courier New, monospace;
+                            color:#374151;
+                            font-size:13px;">
+                    TICKET ID:
+                    <strong th:text="${ticketId}">
+                      XXXXXXXX
+                    </strong>
+                  </div>
+
+                </td>
+              </tr>
+            </table>
+
+            <!-- Info Box -->
+            <table width="100%" cellpadding="0" cellspacing="0" border="0"
+                   style="margin-top:25px;">
+              <tr>
+                <td style="
+                        background:#111827;
+                        color:#D1D5DB;
+                        padding:18px;
+                        border-radius:8px;
+                        font-size:13px;
+                        line-height:1.8;">
+
+                  <strong>Before you go:</strong><br><br>
+
+                  • Save or screenshot this QR code.<br>
+                  • The QR code is also attached as a PNG file.<br>
+                  • One QR code allows one entry only.<br>
+                  • Do not share your QR code publicly.
+
+                </td>
+              </tr>
+            </table>
+
+          </td>
+        </tr>
+
+        <!-- Footer -->
+        <tr>
+          <td align="center"
+              style="padding:25px;background:#F9FAFB;border-top:1px solid #E5E7EB;">
+
+            <p style="margin:0;font-size:12px;color:#9CA3AF;">
+              This is an automated confirmation email.
+            </p>
+
+            <p style="margin-top:6px;font-size:12px;color:#9CA3AF;">
+              Please do not reply to this email.
+            </p>
+
+            <p style="margin-top:12px;font-size:12px;color:#6B7280;">
+              Event Management Platform
+            </p>
+
+          </td>
+        </tr>
+
+      </table>
+
+    </td>
+  </tr>
+</table>
+
+</body>
+</html>
+```

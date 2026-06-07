@@ -1,0 +1,37 @@
+name: Deploy Backend
+
+# Only runs when files inside backend/ change
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'backend/**'
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Java 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          cache: maven
+
+      - name: Build JAR
+        working-directory: backend
+        run: ./mvnw clean package -DskipTests
+
+      # Railway auto-deploys when you push to main (no action needed if
+      # Railway is connected directly to this GitHub repo).
+      # The step below is only needed if you want to trigger Railway manually.
+      - name: Trigger Railway deploy
+        if: ${{ secrets.RAILWAY_TOKEN != '' }}
+        run: |
+          curl -X POST \
+            -H "Authorization: Bearer ${{ secrets.RAILWAY_TOKEN }}" \
+            https://backboard.railway.app/graphql/v2 \
+            -H "Content-Type: application/json" \
+            -d '{"query":"mutation { deploymentTrigger(input:{serviceId:\"${{ secrets.RAILWAY_SERVICE_ID }}\"}){id}}"}'

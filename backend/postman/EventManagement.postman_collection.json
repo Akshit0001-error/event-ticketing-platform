@@ -1,0 +1,416 @@
+{
+  "info": {
+    "name": "EventManagement API",
+    "_postman_id": "0b9d2c7a-4e2f-4b2f-86b7-3c0b1a2c3d4e",
+    "description": "Postman collection for EventManagement backend (JWT chaining + basic assertions).",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "baseUrl", "value": "http://localhost:8080" },
+    { "key": "attendee_password", "value": "TestPass123!" },
+    { "key": "organizer_password", "value": "TestPass123!" },
+    { "key": "staff_token", "value": "" }
+  ],
+  "item": [
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "Register Organizer",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": { "raw": "{{baseUrl}}/api/v1/auth/register", "type": "string" },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"{{organizer_name}}\",\n  \"email\": \"{{organizer_email}}\",\n  \"password\": \"{{organizer_password}}\",\n  \"role\": \"ORGANIZER\"\n}"
+            }
+          },
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const ts = Date.now();",
+                  "pm.environment.set('organizer_email', `organizer+${ts}@example.com`);",
+                  "pm.environment.set('organizer_name', `Organizer ${ts}`);"
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.response.to.have.status(201);"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Login Organizer (store organizer_token)",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": { "raw": "{{baseUrl}}/api/v1/auth/login", "type": "string" },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"{{organizer_email}}\",\n  \"password\": \"{{organizer_password}}\"\n}"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.response.to.have.status(200);",
+                  "const json = pm.response.json();",
+                  "pm.environment.set('organizer_token', json.token);",
+                  "pm.environment.set('organizer_role', json.role);",
+                  "pm.environment.set('organizer_name_res', json.name);",
+                  "pm.test('JWT role is ORGANIZER', function () { pm.expect(json.role).to.eql('ORGANIZER'); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Register Attendee",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": { "raw": "{{baseUrl}}/api/v1/auth/register", "type": "string" },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"{{attendee_name}}\",\n  \"email\": \"{{attendee_email}}\",\n  \"password\": \"{{attendee_password}}\",\n  \"role\": \"ATTENDEE\"\n}"
+            }
+          },
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const ts = Date.now();",
+                  "pm.environment.set('attendee_email', `attendee+${ts}@example.com`);",
+                  "pm.environment.set('attendee_name', `Attendee ${ts}`);"
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.response.to.have.status(201);"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Login Attendee (store attendee_token)",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": { "raw": "{{baseUrl}}/api/v1/auth/login", "type": "string" },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"{{attendee_email}}\",\n  \"password\": \"{{attendee_password}}\"\n}"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.response.to.have.status(200);",
+                  "const json = pm.response.json();",
+                  "pm.environment.set('attendee_token', json.token);",
+                  "pm.test('JWT role is ATTENDEE', function () { pm.expect(json.role).to.eql('ATTENDEE'); });"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Organizer (Events)",
+      "item": [
+        {
+          "name": "Create Event (PUBLISHED) + store created_event_id + ticketTypeId",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{organizer_token}}" }
+            ],
+            "url": { "raw": "{{baseUrl}}/api/v1/events", "type": "string" },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Event {{__ts}}\",\n  \"start\": \"2026-01-01T10:00:00\",\n  \"end\": \"2026-01-01T12:00:00\",\n  \"venue\": \"Venue {{__ts}}\",\n  \"salesStart\": \"2025-12-15T00:00:00\",\n  \"salesEnd\": \"2026-01-01T09:00:00\",\n  \"status\": \"PUBLISHED\",\n  \"ticketTypes\": [\n    {\n      \"name\": \"General\",\n      \"price\": 100.0,\n      \"description\": \"General entry ticket\",\n      \"totalAvailable\": 10\n    }\n  ]\n}"
+            }
+          },
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const ts = Date.now();",
+                  "pm.environment.set('__ts', ts);"
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.response.to.have.status(201);",
+                  "const json = pm.response.json();",
+                  "pm.environment.set('created_event_id', json.id);",
+                  "pm.environment.set('created_ticket_type_id', json.ticketTypes[0].id);",
+                  "pm.test('ticketTypes present', function () { pm.expect(json.ticketTypes).to.be.an('array'); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Get Published Event Details (by id)",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{baseUrl}}/api/v1/published-events/{{created_event_id}}", "type": "string" }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.response.to.have.status(200);",
+                  "const json = pm.response.json();",
+                  "pm.expect(json.id).to.eql(pm.environment.get('created_event_id'));",
+                  "pm.expect(json.ticketTypes).to.be.an('array');"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Attendee (Tickets)",
+      "item": [
+        {
+          "name": "Purchase Ticket (204)",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{attendee_token}}" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/events/{{created_event_id}}/ticket-types/{{created_ticket_type_id}}/tickets",
+              "type": "string"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.response.to.have.status(204);"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "List Tickets (store created_ticket_id)",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{attendee_token}}" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/tickets?page=0&size=10",
+              "type": "string"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.response.to.have.status(200);",
+                  "const json = pm.response.json();",
+                  "pm.expect(json.content).to.be.an('array');",
+                  "pm.expect(json.content.length).to.be.at.least(1);",
+                  "pm.environment.set('created_ticket_id', json.content[0].id);"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Get Ticket Details",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{attendee_token}}" }
+            ],
+            "url": { "raw": "{{baseUrl}}/api/v1/tickets/{{created_ticket_id}}", "type": "string" }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.response.to.have.status(200);",
+                  "const json = pm.response.json();",
+                  "pm.expect(json.id).to.eql(pm.environment.get('created_ticket_id'));",
+                  "pm.expect(json.eventName).to.exist;",
+                  "pm.expect(json.eventVenue).to.exist;",
+                  "pm.expect(json.status).to.exist;"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Download Ticket QR (image/png)",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{attendee_token}}" }
+            ],
+            "url": { "raw": "{{baseUrl}}/api/v1/tickets/{{created_ticket_id}}/qr-codes", "type": "string" }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.response.to.have.status(200);",
+                  "pm.expect(pm.response.headers.get('Content-Type')).to.include('image/png');"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Staff (Ticket Validation - optional)",
+      "item": [
+        {
+          "name": "Login Staff (assumes staff exists) -> store staff_token",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": { "raw": "{{baseUrl}}/api/v1/auth/login", "type": "string" },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"{{staff_email}}\",\n  \"password\": \"{{staff_password}}\"\n}"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Login staff returns 200 or 401', function () { pm.expect(pm.response.code).to.be.oneOf([200, 401]); });",
+                  "if (pm.response.code === 200) {",
+                  "  const json = pm.response.json();",
+                  "  pm.environment.set('staff_token', json.token);",
+                  "  pm.expect(json.role).to.eql('STAFF');",
+                  "}"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Manual Validate Ticket (1st) -> VALID (or 401 if no staff_token)",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{staff_token}}" }
+            ],
+            "url": { "raw": "{{baseUrl}}/api/v1/ticket-validations", "type": "string" },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"id\": \"{{created_ticket_id}}\",\n  \"method\": \"MANUAL\"\n}"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const staffToken = pm.environment.get('staff_token');",
+                  "if (!staffToken) {",
+                  "  pm.test('Missing staff token => 401', function () { pm.response.to.have.status(401); });",
+                  "} else {",
+                  "  pm.test('Staff validation returns 200', function () { pm.response.to.have.status(200); });",
+                  "  const json = pm.response.json();",
+                  "  pm.expect(json.ticketId).to.eql(pm.environment.get('created_ticket_id'));",
+                  "  pm.expect(json.status).to.eql('VALID');",
+                  "}"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Manual Validate Ticket (2nd) -> INVALID (or 401 if no staff_token)",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{staff_token}}" }
+            ],
+            "url": { "raw": "{{baseUrl}}/api/v1/ticket-validations", "type": "string" },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"id\": \"{{created_ticket_id}}\",\n  \"method\": \"MANUAL\"\n}"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const staffToken = pm.environment.get('staff_token');",
+                  "if (!staffToken) {",
+                  "  pm.test('Missing staff token => 401', function () { pm.response.to.have.status(401); });",
+                  "} else {",
+                  "  pm.test('Staff validation returns 200', function () { pm.response.to.have.status(200); });",
+                  "  const json = pm.response.json();",
+                  "  pm.expect(json.ticketId).to.eql(pm.environment.get('created_ticket_id'));",
+                  "  pm.expect(json.status).to.eql('INVALID');",
+                  "}"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
+

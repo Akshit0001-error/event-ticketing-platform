@@ -1,0 +1,25 @@
+# ── Node / Frontend ───────────────────────────────────────────────────────────
+frontend/node_modules/
+frontend/dist/
+frontend/.vite/
+frontend/.env
+frontend/.env.local
+
+# ── Java / Backend ────────────────────────────────────────────────────────────
+backend/target/
+backend/.mvn/wrapper/maven-wrapper.jar
+backend/*.class
+backend/application-local.properties
+backend/application-prod.properties
+
+# ── IDE ───────────────────────────────────────────────────────────────────────
+.idea/
+*.iml
+.vscode/
+*.DS_Store
+
+# ── Environment secrets (never commit these) ─────────────────────────────────
+.env
+.env.*
+!.env.example
+!frontend/.env.example
