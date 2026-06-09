@@ -192,7 +192,7 @@ export default function DashboardPage() {
           </PageHeader>
 
           {/* ── KPI row ──────────────────────────────────────────────── */}
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: 14, marginBottom: 20 }}>
+          <div className="dash-kpi-grid">
             <StatCard label="Total events"    value={events.length}                       icon="📅" />
             <StatCard label="Published"       value={stats.published}  color={COLOR.success} icon="✅" />
             <StatCard label="Tickets sold"    value={stats.soldTickets.toLocaleString()}  icon="🎟️" />
@@ -220,7 +220,7 @@ export default function DashboardPage() {
           </div>
 
           {/* ── Charts row ───────────────────────────────────────────── */}
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 340px', gap: 14, marginBottom: 20 }}>
+          <div className="dash-chart-grid">
 
             {/* Tickets sold per event — bar chart */}
             <ChartCard title="Tickets sold per event">

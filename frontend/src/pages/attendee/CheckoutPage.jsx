@@ -104,7 +104,7 @@ export default function CheckoutPage() {
   /* ── Success screen ── */
   if (step === 'done') {
     return (
-      <div style={{ maxWidth: 480, margin: '80px auto', padding: '0 24px', textAlign: 'center' }} className="fade-in">
+      <div className="checkout-success fade-in">
         <div style={{ fontFamily: 'var(--font-mono)', fontSize: 52, color: 'var(--success)', marginBottom: 16, lineHeight: 1 }}>✓</div>
         <h1 style={{ fontSize: 24, marginBottom: 8, fontFamily: 'var(--font-display)' }}>Booking confirmed</h1>
         <p style={{ color: 'var(--text-2)', fontSize: 13.5, marginBottom: 28, lineHeight: 1.7 }}>
@@ -112,7 +112,7 @@ export default function CheckoutPage() {
           <strong style={{ color: 'var(--text)' }}>{event.name}</strong>.
           QR codes have been sent to your email.
         </p>
-        <div style={{ display: 'flex', gap: 8, justifyContent: 'center' }}>
+        <div className="checkout-success-actions">
           <Button variant="primary" onClick={() => navigate('/tickets')}>View my tickets</Button>
           <Button onClick={() => navigate('/browse')}>Browse more</Button>
         </div>
@@ -121,12 +121,10 @@ export default function CheckoutPage() {
   }
 
   return (
-    <div style={{ maxWidth: 520, margin: '0 auto', padding: '32px 24px 64px' }} className="fade-in">
+    <div className="checkout-wrap fade-in">
       <button
         onClick={() => navigate(-1)}
-        style={{ background: 'none', border: 'none', color: 'var(--text-2)', cursor: 'pointer', fontSize: 13.5, marginBottom: 24, display: 'flex', alignItems: 'center', gap: 6, transition: 'color 0.12s' }}
-        onMouseEnter={e => e.target.style.color='var(--text)'}
-        onMouseLeave={e => e.target.style.color='var(--text-2)'}
+        className="back-btn"
       >
         ← Back
       </button>
