@@ -335,10 +335,6 @@ npm run build
 
 ## 👨‍💻 Author
 
-Akshit
+Akshit Saini
 
 ---
-
-## 📄 License
-
-MIT License
