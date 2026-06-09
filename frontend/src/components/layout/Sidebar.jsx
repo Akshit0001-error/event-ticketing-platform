@@ -1,11 +1,13 @@
 /**
  * components/layout/Sidebar.jsx
+ * Collapsible animated sidebar with user card at top and safe logout confirmation.
  */
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import { useToast } from '../../context/ToastContext';
 import { initials } from '../../utils/format';
 import { ThemeToggle } from '../ui/ThemeToggle';
+import { useState } from 'react';
 
 const NAV = {
   ATTENDEE: [
@@ -26,36 +28,65 @@ const PUBLIC_NAV = [
   { to: '/browse', label: 'Browse Events', icon: '◈' },
 ];
 
-export function Sidebar({ mobileOpen, onClose }) {
-  const { user, logout } = useAuth();
-  const { toast }        = useToast();
-  const navigate         = useNavigate();
+export function Sidebar({ mobileOpen, onClose, collapsed, onCollapsedChange }) {
+  const { user, logout }               = useAuth();
+  const { toast }                      = useToast();
+  const navigate                       = useNavigate();
+  const [showLogoutConfirm, setShowLogoutConfirm] = useState(false);
 
   const links = user ? (NAV[user.role] || []) : PUBLIC_NAV;
 
-  const handleLogout = () => {
+  const handleLogoutClick = (e) => {
+    e.stopPropagation();
+    setShowLogoutConfirm(true);
+  };
+
+  const confirmLogout = () => {
     logout();
     toast('Signed out.', 'info');
     navigate('/login');
     onClose();
+    setShowLogoutConfirm(false);
   };
 
   return (
     <>
+      {/* Mobile overlay */}
       <div className={`sidebar-overlay ${mobileOpen ? 'open' : ''}`} onClick={onClose} />
 
-      <aside className={`sidebar ${mobileOpen ? 'open' : ''}`}>
-        {/* Logo */}
+      <aside className={`sidebar ${mobileOpen ? 'mobile-open' : ''} ${collapsed ? 'collapsed' : ''}`}>
+
+        {/* Logo row + collapse toggle */}
         <div className="sidebar-logo">
           <div className="sidebar-logo-mark">T</div>
-          <span>Ticket Platform</span>
+          <span className="sidebar-logo-text">Ticket Platform</span>
+          <button
+            className="sidebar-collapse-btn"
+            onClick={() => onCollapsedChange(!collapsed)}
+            title={collapsed ? 'Expand sidebar' : 'Collapse sidebar'}
+          >
+            <span className={`sidebar-collapse-icon ${collapsed ? 'flipped' : ''}`}>‹</span>
+          </button>
         </div>
+
+        {/* ── User card at top ── */}
+        {user && (
+          <div className="sidebar-user-card">
+            <div className="sidebar-avatar sidebar-avatar-lg">{initials(user.name)}</div>
+            <div className="sidebar-user-card-info">
+              <div className="sidebar-user-name truncate">{user.name}</div>
+              <div className="sidebar-user-role">{user.role}</div>
+            </div>
+          </div>
+        )}
 
         {/* Navigation */}
         <nav className="sidebar-nav">
-          <div className="sidebar-section-label" style={{ marginBottom: 8, marginTop: 4 }}>
-            {user ? user.role : 'GUEST'}
-          </div>
+          {!collapsed && (
+            <div className="sidebar-section-label" style={{ marginBottom: 8, marginTop: 4 }}>
+              {user ? user.role : 'GUEST'}
+            </div>
+          )}
           {links.map(({ to, label, icon }) => (
             <NavLink
               key={to}
@@ -63,45 +94,59 @@ export function Sidebar({ mobileOpen, onClose }) {
               className={({ isActive }) => `sidebar-link${isActive ? ' active' : ''}`}
               onClick={onClose}
               end={to === '/dashboard'}
+              title={collapsed ? label : undefined}
             >
               <span className="sidebar-link-icon">{icon}</span>
-              {label}
+              <span className="sidebar-link-label">{label}</span>
             </NavLink>
           ))}
 
           {!user && (
             <>
-              <div className="sidebar-section-label" style={{ marginTop: 16, marginBottom: 8 }}>Account</div>
-              <NavLink to="/login" className={({ isActive }) => `sidebar-link${isActive ? ' active' : ''}`} onClick={onClose}>
-                <span className="sidebar-link-icon">→</span>Sign In
+              {!collapsed && (
+                <div className="sidebar-section-label" style={{ marginTop: 16, marginBottom: 8 }}>Account</div>
+              )}
+              <NavLink to="/login" className={({ isActive }) => `sidebar-link${isActive ? ' active' : ''}`} onClick={onClose} title={collapsed ? 'Sign In' : undefined}>
+                <span className="sidebar-link-icon">→</span>
+                <span className="sidebar-link-label">Sign In</span>
               </NavLink>
-              <NavLink to="/register" className={({ isActive }) => `sidebar-link${isActive ? ' active' : ''}`} onClick={onClose}>
-                <span className="sidebar-link-icon">+</span>Register
+              <NavLink to="/register" className={({ isActive }) => `sidebar-link${isActive ? ' active' : ''}`} onClick={onClose} title={collapsed ? 'Register' : undefined}>
+                <span className="sidebar-link-icon">+</span>
+                <span className="sidebar-link-label">Register</span>
               </NavLink>
             </>
           )}
         </nav>
 
-        {/* User footer */}
+        {/* Footer: appearance + sign out */}
         {user && (
           <div className="sidebar-footer">
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 8 }}>
-              <span style={{ fontSize: 11, color: 'var(--text-3)', textTransform: 'uppercase', letterSpacing: '0.06em', fontFamily: 'var(--font-mono)' }}>
-                Appearance
-              </span>
+            <div className="sidebar-footer-row">
+              {!collapsed && <span className="sidebar-footer-label">Appearance</span>}
               <ThemeToggle />
             </div>
-            <div className="sidebar-user" onClick={handleLogout} title="Click to sign out">
-              <div className="sidebar-avatar">{initials(user.name)}</div>
-              <div className="sidebar-user-info">
-                <div className="sidebar-user-name truncate">{user.name}</div>
-                <div className="sidebar-user-role">{user.role}</div>
-              </div>
-              <span style={{ color: 'var(--text-3)', fontSize: 10, flexShrink: 0 }}>out</span>
-            </div>
+            <button className="sidebar-signout-btn" onClick={handleLogoutClick} title="Sign out">
+              <span className="sidebar-signout-icon">⎋</span>
+              <span className="sidebar-link-label">Sign out</span>
+            </button>
           </div>
         )}
       </aside>
+
+      {/* ── Logout confirmation modal ── */}
+      {showLogoutConfirm && (
+        <div className="logout-confirm-overlay" onClick={() => setShowLogoutConfirm(false)}>
+          <div className="logout-confirm-dialog" onClick={e => e.stopPropagation()}>
+            <div className="logout-confirm-avatar">{initials(user?.name)}</div>
+            <h3 className="logout-confirm-title">Sign out?</h3>
+            <p className="logout-confirm-sub">You'll be redirected to the login page.</p>
+            <div className="logout-confirm-actions">
+              <button className="logout-confirm-cancel" onClick={() => setShowLogoutConfirm(false)}>Cancel</button>
+              <button className="logout-confirm-ok" onClick={confirmLogout}>Sign out</button>
+            </div>
+          </div>
+        </div>
+      )}
     </>
   );
 }

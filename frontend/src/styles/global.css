@@ -77,7 +77,10 @@ h4 { font-size: 11px; font-weight: 600; color: var(--text-3); text-transform: up
   flex-direction: column;
   overflow: hidden;
   margin-left: var(--sidebar-w);
-  transition: margin-left var(--t-med);
+  transition: margin-left 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+[data-sidebar-collapsed="true"] .app-main {
+  margin-left: 56px;
 }
 .app-content {
   flex: 1;
