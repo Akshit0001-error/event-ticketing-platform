@@ -2,15 +2,9 @@
  * components/shared/EventCard.jsx
  * Shows event banner image (or a styled default gradient) at the top,
  * with name, venue, date and price below.
- *
- * FIX: ticketTypes may be absent/empty in public listing responses.
- * - Hide "0 ticket types" noise — only show count when > 0
- * - Replace "No Tickets" with "View Event" CTA when data is missing
- * - When ticketTypes present and all free → "Free"
- * - When ticketTypes present with price → "from ₹X"
  */
 import { Badge } from '../ui/Badge';
-import { fmtDate } from '../../utils/format';
+import { fmtDate, fmtPrice, minPrice } from '../../utils/format';
 
 // Deterministic gradient per event id so each card looks distinct
 const GRADIENTS = [
@@ -30,6 +24,7 @@ function pickGradient(id) {
 }
 
 export function EventCard({ event, onClick }) {
+  const from = minPrice(event.ticketTypes);
 
   return (
     <div
@@ -79,6 +74,19 @@ export function EventCard({ event, onClick }) {
         <div className="event-card-venue">
           <span style={{ opacity: 0.5, fontSize: 11 }}>📍</span>
           {event.venue || 'Venue TBD'}
+        </div>
+
+        <div className="event-card-footer" style={{ marginTop: 10 }}>
+          <span className="xs muted">
+            {(event.ticketTypes || []).length} ticket type{(event.ticketTypes || []).length !== 1 ? 's' : ''}
+          </span>
+          <span className="event-price">
+            {from === null
+              ? 'No Tickets'
+              : from === 0
+              ? 'Free'
+              : `from ${fmtPrice(from)}`}
+          </span>
         </div>
       </div>
     </div>
