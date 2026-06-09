@@ -44,7 +44,7 @@ function useCountUp(target, active, duration = 1400) {
 }
 
 // ─── Sparkline ────────────────────────────────────────────────────────────────
-function Sparkline({ data, color = '#e8a046', height = 36 }) {
+function Sparkline({ data, color = '#00d4b4', height = 36 }) {
   const w = 120, h = height;
   const max = Math.max(...data), min = Math.min(...data);
   const pts = data.map((v, i) => {
@@ -79,14 +79,14 @@ function DashboardVisual({ active }) {
       </div>
       <div className="hp-mockup-stats">
         {[
-          { label: 'Total Revenue', value: `₹${rev.toLocaleString('en-IN')}`, delta: '+18%', data: revenueData, color: '#e8a046' },
-          { label: 'Tickets Sold',  value: tkts.toLocaleString(),             delta: '+24%', data: ticketData,  color: '#5c9de8' },
-          { label: 'QR Validated',  value: val.toLocaleString(),              delta: '71%',  data: [40,48,52,55,60,58,65,70,68,75,72,80], color: '#4caf7d' },
+          { label: 'Total Revenue', value: `₹${rev.toLocaleString('en-IN')}`, delta: '+18%', data: revenueData, color: '#00d4b4' },
+          { label: 'Tickets Sold',  value: tkts.toLocaleString(),             delta: '+24%', data: ticketData,  color: '#60a5fa' },
+          { label: 'QR Validated',  value: val.toLocaleString(),              delta: '71%',  data: [40,48,52,55,60,58,65,70,68,75,72,80], color: '#34d399' },
         ].map((s, i) => (
           <div key={i} className="hp-mockup-stat">
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 6 }}>
               <span style={{ fontSize: 10, color: 'var(--text-3)', textTransform: 'uppercase', letterSpacing: '0.07em', fontWeight: 600 }}>{s.label}</span>
-              <span style={{ fontSize: 9, color: '#4caf7d', background: 'rgba(76,175,125,0.12)', padding: '1px 5px', borderRadius: 3, fontFamily: 'var(--font-mono)', fontWeight: 600 }}>{s.delta}</span>
+              <span style={{ fontSize: 9, color: '#34d399', background: 'rgba(52,211,153,0.12)', padding: '1px 5px', borderRadius: 3, fontFamily: 'var(--font-mono)', fontWeight: 600 }}>{s.delta}</span>
             </div>
             <div style={{ fontSize: 20, fontWeight: 700, fontFamily: 'var(--font-mono)', color: 'var(--text)', letterSpacing: '-0.5px', marginBottom: 4 }}>{s.value}</div>
             <Sparkline data={s.data} color={s.color} />
@@ -106,7 +106,7 @@ function DashboardVisual({ active }) {
               <div style={{ fontSize: 11, fontWeight: 600, color: 'var(--text)', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{ev.name}</div>
               <div style={{ fontSize: 10, color: 'var(--text-3)', fontFamily: 'var(--font-mono)' }}>{ev.tickets} tickets</div>
             </div>
-            <span style={{ fontSize: 9, padding: '2px 6px', borderRadius: 3, fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.06em', background: ev.status === 'live' ? 'rgba(76,175,125,0.15)' : 'rgba(255,255,255,0.06)', color: ev.status === 'live' ? '#4caf7d' : 'var(--text-3)' }}>{ev.status}</span>
+            <span style={{ fontSize: 9, padding: '2px 6px', borderRadius: 3, fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.06em', background: ev.status === 'live' ? 'rgba(52,211,153,0.15)' : 'rgba(255,255,255,0.06)', color: ev.status === 'live' ? '#34d399' : 'var(--text-3)' }}>{ev.status}</span>
           </div>
         ))}
       </div>
@@ -183,7 +183,7 @@ function QRValidateVisual({ active }) {
           <div className={`hp-scan-result${scanPulse ? ' hp-scan-result--show' : ''}`}>
             <div className="hp-scan-check">✓</div>
             <div>
-              <div style={{ fontSize: 13, fontWeight: 700, color: '#4caf7d' }}>Valid Ticket</div>
+              <div style={{ fontSize: 13, fontWeight: 700, color: '#34d399' }}>Valid Ticket</div>
               <div style={{ fontSize: 11, color: 'var(--text-3)' }}>Rahul Sharma · General Admission</div>
             </div>
           </div>
@@ -197,7 +197,7 @@ function QRValidateVisual({ active }) {
               { name: 'Unknown',      time: '3m ago',  ok: false },
             ].map((s, i) => (
               <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '5px 0', borderBottom: '1px solid var(--border)' }}>
-                <span style={{ fontSize: 10, width: 16, height: 16, borderRadius: '50%', background: s.ok ? 'rgba(76,175,125,0.15)' : 'rgba(224,85,85,0.15)', color: s.ok ? '#4caf7d' : '#e05555', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>{s.ok ? '✓' : '✕'}</span>
+                <span style={{ fontSize: 10, width: 16, height: 16, borderRadius: '50%', background: s.ok ? 'rgba(52,211,153,0.15)' : 'rgba(224,85,85,0.15)', color: s.ok ? '#34d399' : '#f87171', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>{s.ok ? '✓' : '✕'}</span>
                 <span style={{ fontSize: 11, color: 'var(--text)', flex: 1, fontWeight: 500 }}>{s.name}</span>
                 <span style={{ fontSize: 10, color: 'var(--text-3)', fontFamily: 'var(--font-mono)' }}>{s.time}</span>
               </div>
@@ -271,7 +271,7 @@ const HERO_SLIDES = [
 function Check() {
   return (
     <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
-      <path d="M10 3L5 9 2 6" stroke="#4caf7d" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+      <path d="M10 3L5 9 2 6" stroke="#34d399" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
     </svg>
   );
 }
@@ -463,6 +463,44 @@ function BigChart({ active }) {
   );
 }
 
+// ─── EventsCarousel ───────────────────────────────────────────────────────────
+function EventsCarousel({ events, navigate, inView }) {
+  const [paused, setPaused] = useState(false);
+  const [hoveredId, setHoveredId] = useState(null);
+
+  // Duplicate enough times so the loop is seamless at any screen width
+  const items = events.length > 0 ? [...events, ...events, ...events] : [];
+
+  return (
+    <div
+      className={`hp-carousel-outer${inView ? ' hp-carousel-outer--visible' : ''}`}
+      onMouseEnter={() => setPaused(true)}
+      onMouseLeave={() => { setPaused(false); setHoveredId(null); }}
+    >
+      {/* Fade-edge masks */}
+      <div className="hp-carousel-fade hp-carousel-fade--left" />
+      <div className="hp-carousel-fade hp-carousel-fade--right" />
+
+      <div className={`hp-carousel-track${paused ? ' hp-carousel-track--paused' : ''}`}>
+        {items.map((e, i) => (
+          <div
+            key={`${e.id}-${i}`}
+            className={`hp-carousel-item${hoveredId === `${e.id}-${i}` ? ' hp-carousel-item--hovered' : ''}`}
+            onMouseEnter={() => setHoveredId(`${e.id}-${i}`)}
+            onMouseLeave={() => setHoveredId(null)}
+            onClick={() => navigate(`/events/${e.id}`)}
+            role="button"
+            tabIndex={0}
+            onKeyDown={ev => ev.key === 'Enter' && navigate(`/events/${e.id}`)}
+          >
+            <EventCard event={e} onClick={() => navigate(`/events/${e.id}`)} />
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 // ─── Main HomePage ────────────────────────────────────────────────────────────
 export default function HomePage() {
   const navigate = useNavigate();
@@ -510,10 +548,11 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ════════ FEATURED EVENTS ════════ */}
-      <section className="hp-section" ref={evRef}>
+      {/* ════════ FEATURED EVENTS — INFINITE CAROUSEL ════════ */}
+      <section className="hp-section hp-carousel-section" ref={evRef}>
+        {/* Header stays inside max-width container */}
         <div className="hp-section-inner">
-          <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', marginBottom: 32, flexWrap: 'wrap', gap: 12 }}>
+          <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', marginBottom: 40, flexWrap: 'wrap', gap: 12 }}>
             <div>
               <div className="hp-section-label" style={{ opacity: evInView ? 1 : 0, transition: 'opacity 0.4s ease' }}>Live Now</div>
               <h2 className="hp-section-title" style={{ marginBottom: 0, opacity: evInView ? 1 : 0, transform: evInView ? 'translateY(0)' : 'translateY(12px)', transition: 'all 0.45s ease 0.1s' }}>
@@ -524,23 +563,23 @@ export default function HomePage() {
               View all events →
             </button>
           </div>
-          {loading ? <LoadingState /> : events.length === 0 ? (
+        </div>
+
+        {/* Full-width carousel track — bleeds past container */}
+        {loading ? (
+          <div className="hp-section-inner"><LoadingState /></div>
+        ) : events.length === 0 ? (
+          <div className="hp-section-inner">
             <div className="hp-empty-events">
               <div className="hp-empty-icon">🎟</div>
               <div className="hp-empty-title">No events published yet</div>
               <div className="hp-empty-sub">Be the first to create an event on the platform.</div>
               <button className="hp-btn-primary" onClick={() => navigate('/login')} style={{ marginTop: 20 }}>Create Event</button>
             </div>
-          ) : (
-            <div className="events-grid">
-              {events.map((e, i) => (
-                <div key={e.id} style={{ opacity: evInView ? 1 : 0, transform: evInView ? 'translateY(0)' : 'translateY(24px)', transition: `opacity 0.5s ease ${i * 60}ms, transform 0.5s ease ${i * 60}ms` }}>
-                  <EventCard event={e} onClick={() => navigate(`/events/${e.id}`)} />
-                </div>
-              ))}
-            </div>
-          )}
-        </div>
+          </div>
+        ) : (
+          <EventsCarousel events={events} navigate={navigate} inView={evInView} />
+        )}
       </section>
 
       {/* ════════ HOW IT WORKS ════════ */}
@@ -604,7 +643,7 @@ export default function HomePage() {
                 <div className="hp-big-chart">
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 12 }}>
                     <span style={{ fontSize: 11, fontWeight: 600, color: 'var(--text-2)' }}>Revenue — Last 12 weeks</span>
-                    <span style={{ fontSize: 11, color: '#4caf7d', fontFamily: 'var(--font-mono)', fontWeight: 600 }}>+18% ↑</span>
+                    <span style={{ fontSize: 11, color: '#34d399', fontFamily: 'var(--font-mono)', fontWeight: 600 }}>+18% ↑</span>
                   </div>
                   <BigChart active={statsInView} />
                 </div>

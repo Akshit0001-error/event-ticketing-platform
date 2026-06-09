@@ -177,8 +177,8 @@
 .btn:active { transform: scale(0.98); }
 .btn:disabled { opacity: 0.38; cursor: not-allowed; pointer-events: none; }
 
-.btn-primary  { background: var(--accent); color: var(--accent-text); border-color: var(--accent); font-weight: 600; }
-.btn-primary:hover { background: #f0ac52; border-color: #f0ac52; color: var(--accent-text); }
+.btn-primary  { background: var(--accent-grad); color: #fff; border-color: transparent; font-weight: 600; }
+.btn-primary:hover { opacity: 0.85; border-color: transparent; color: #fff; box-shadow: 0 4px 16px rgba(124,58,237,0.35); }
 
 .btn-ghost  { border-color: transparent; }
 .btn-ghost:hover { border-color: var(--border-2); background: var(--surface-2); }

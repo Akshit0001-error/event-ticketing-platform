@@ -1,52 +1,53 @@
 /* ─────────────────────────────────────────────────────────────────
    variables.css — Design tokens for Ticket Platform
-   Theme: Refined dark / editorial with warm amber accent
+   Theme: Deep space — midnight navy with cyan-to-violet gradient accent
 ───────────────────────────────────────────────────────────────── */
-@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=DM+Mono:wght@400;500&family=Playfair+Display:wght@600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=DM+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;600;700&display=swap');
 
 :root {
   /* --- Backgrounds --- */
-  --bg:        #0e0e0f;
-  --surface:   #161618;
-  --surface-2: #1e1e21;
-  --surface-3: #28282c;
+  --bg:        #08071a;
+  --surface:   #0f0d2a;
+  --surface-2: #161436;
+  --surface-3: #1e1c42;
 
   /* --- Navbar (uses semi-transparent for frosted glass effect) --- */
-  --nav-bg: rgba(14, 14, 15, 0.90);
+  --nav-bg: rgba(8, 7, 26, 0.88);
 
   /* --- Borders --- */
-  --border:   #2a2a2e;
-  --border-2: #363639;
+  --border:   #1e1c42;
+  --border-2: #2a2860;
 
   /* --- Text --- */
-  --text:   #f0ede8;
-  --text-2: #7a7880;
-  --text-3: #46444d;
+  --text:   #e8e6ff;
+  --text-2: #7b78b8;
+  --text-3: #413e7a;
 
-  /* --- Accent (warm amber) --- */
-  --accent:      #e8a046;
-  --accent-dim:  rgba(232, 160, 70, 0.12);
-  --accent-text: #0e0e0f;
+  /* --- Accent (cyan → purple gradient; single-value fallback = cyan) --- */
+  --accent:       #00d4b4;
+  --accent-grad:  linear-gradient(135deg, #00d4b4 0%, #7c3aed 100%);
+  --accent-dim:   rgba(0, 212, 180, 0.12);
+  --accent-text:  #08071a;
 
   /* --- Status --- */
-  --success:    #4caf7d;
-  --success-bg: rgba(76, 175, 125, 0.10);
-  --error:      #e05555;
-  --error-bg:   rgba(224, 85, 85, 0.10);
-  --warning:    #e8a046;
-  --warning-bg: rgba(232, 160, 70, 0.10);
-  --info:       #5c9de8;
-  --info-bg:    rgba(92, 157, 232, 0.10);
+  --success:    #34d399;
+  --success-bg: rgba(52, 211, 153, 0.10);
+  --error:      #f87171;
+  --error-bg:   rgba(248, 113, 113, 0.10);
+  --warning:    #fbbf24;
+  --warning-bg: rgba(251, 191, 36, 0.10);
+  --info:       #60a5fa;
+  --info-bg:    rgba(96, 165, 250, 0.10);
 
   /* --- Layout --- */
   --sidebar-w:  230px;
-  --sidebar-bg: #0b0b0c;
+  --sidebar-bg: #06051a;
   --topbar-h:   52px;
 
   /* --- Typography --- */
-  --font:         'DM Sans', sans-serif;
+  --font:         'Space Grotesk', 'DM Sans', sans-serif;
   --font-mono:    'DM Mono', monospace;
-  --font-display: 'Playfair Display', serif;
+  --font-display: 'Space Grotesk', sans-serif;
 
   /* --- Spacing (8-pt grid) --- */
   --s1: 4px;
@@ -65,9 +66,9 @@
   --r4: 16px;
 
   /* --- Shadows --- */
-  --shadow-sm: 0 1px 4px rgba(0,0,0,0.5);
-  --shadow-md: 0 4px 16px rgba(0,0,0,0.55);
-  --shadow-lg: 0 8px 32px rgba(0,0,0,0.6);
+  --shadow-sm: 0 1px 4px rgba(0,0,0,0.6);
+  --shadow-md: 0 4px 20px rgba(0,0,0,0.65);
+  --shadow-lg: 0 8px 40px rgba(0,0,0,0.7);
 
   /* --- Transitions --- */
   --t-fast: 0.12s ease;
@@ -76,43 +77,41 @@
 
 /* ─────────────────────────────────────────────────────────────────
    Light theme overrides — applied when <html data-theme="light">
-   All other tokens (accent, status colours, spacing, fonts) inherit
-   from :root and stay the same in both themes.
 ───────────────────────────────────────────────────────────────── */
 [data-theme="light"] {
-  /* Backgrounds — clean white */
-  --bg:        #ffffff;
+  /* Backgrounds — clean cool white */
+  --bg:        #f6f5ff;
   --surface:   #ffffff;
-  --surface-2: #f4f4f5;
-  --surface-3: #ebebec;
+  --surface-2: #eeecff;
+  --surface-3: #e4e1ff;
 
-  /* Navbar — white with slight transparency */
-  --nav-bg: rgba(255, 255, 255, 0.92);
+  /* Navbar */
+  --nav-bg: rgba(246, 245, 255, 0.92);
 
   /* Borders */
-  --border:   #e4e4e7;
-  --border-2: #d1d1d6;
+  --border:   #dddaff;
+  --border-2: #c9c5f5;
 
   /* Text */
-  --text:   #09090b;
-  --text-2: #71717a;
-  --text-3: #a1a1aa;
+  --text:   #0d0b2e;
+  --text-2: #5a5890;
+  --text-3: #9896c8;
 
-  /* Accent adjustments for light bg */
-  --accent-dim:  rgba(232, 160, 70, 0.15);
+  /* Accent adjustments */
+  --accent-dim:  rgba(0, 212, 180, 0.14);
   --accent-text: #ffffff;
 
   /* Status backgrounds */
-  --success-bg: rgba(76, 175, 125, 0.12);
-  --error-bg:   rgba(224, 85, 85, 0.12);
-  --warning-bg: rgba(232, 160, 70, 0.12);
-  --info-bg:    rgba(92, 157, 232, 0.12);
+  --success-bg: rgba(52, 211, 153, 0.12);
+  --error-bg:   rgba(248, 113, 113, 0.12);
+  --warning-bg: rgba(251, 191, 36, 0.12);
+  --info-bg:    rgba(96, 165, 250, 0.12);
 
   /* Layout */
-  --sidebar-bg: #fafafa;
+  --sidebar-bg: #faf9ff;
 
-  /* Shadows — subtle on white */
-  --shadow-sm: 0 1px 3px rgba(0,0,0,0.08);
-  --shadow-md: 0 4px 12px rgba(0,0,0,0.10);
-  --shadow-lg: 0 8px 24px rgba(0,0,0,0.12);
+  /* Shadows */
+  --shadow-sm: 0 1px 3px rgba(60,40,180,0.07);
+  --shadow-md: 0 4px 14px rgba(60,40,180,0.09);
+  --shadow-lg: 0 8px 28px rgba(60,40,180,0.12);
 }
