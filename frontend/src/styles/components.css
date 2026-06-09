@@ -46,6 +46,21 @@
 .sidebar.collapsed .sidebar-signout-btn {
   justify-content: center;
 }
+/* Collapsed logo row: hide mark, center the toggle button so it's always reachable */
+.sidebar.collapsed .sidebar-logo {
+  padding: 0;
+  justify-content: center;
+  gap: 0;
+}
+.sidebar.collapsed .sidebar-logo-mark {
+  display: none;
+}
+.sidebar.collapsed .sidebar-collapse-btn {
+  margin-left: 0;
+  width: 32px;
+  height: 32px;
+  border-color: var(--border-2);
+}
 
 /* ── Logo row ── */
 .sidebar-logo {
@@ -61,6 +76,8 @@
   color: var(--text);
   flex-shrink: 0;
   letter-spacing: -0.2px;
+  min-width: 0;
+  overflow: visible;
 }
 .sidebar-logo-mark {
   width: 26px; height: 26px;
@@ -76,7 +93,8 @@
   flex: 1;
   overflow: hidden;
   white-space: nowrap;
-  transition: opacity 0.18s ease, width 0.25s ease;
+  transition: opacity 0.18s ease;
+  min-width: 0;
 }
 
 /* ── Collapse button ── */
@@ -90,7 +108,8 @@
   border-radius: var(--r2);
   color: var(--text-3);
   cursor: pointer;
-  transition: background var(--t-fast), color var(--t-fast), border-color var(--t-fast);
+  transition: background var(--t-fast), color var(--t-fast), border-color var(--t-fast),
+              width 0.2s ease, height 0.2s ease, margin 0.2s ease;
   padding: 0;
   font-size: 14px;
   line-height: 1;
@@ -109,6 +128,11 @@
 }
 .sidebar-collapse-icon.flipped {
   transform: rotate(180deg);
+}
+
+/* Clicking the avatar while collapsed also expands */
+.sidebar.collapsed .sidebar-user-card {
+  cursor: pointer;
 }
 
 /* ── User card at top ── */

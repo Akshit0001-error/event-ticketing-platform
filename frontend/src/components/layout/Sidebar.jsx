@@ -71,7 +71,7 @@ export function Sidebar({ mobileOpen, onClose, collapsed, onCollapsedChange }) {
 
         {/* ── User card at top ── */}
         {user && (
-          <div className="sidebar-user-card">
+          <div className="sidebar-user-card" onClick={collapsed ? () => onCollapsedChange(false) : undefined} title={collapsed ? 'Expand sidebar' : undefined}>
             <div className="sidebar-avatar sidebar-avatar-lg">{initials(user.name)}</div>
             <div className="sidebar-user-card-info">
               <div className="sidebar-user-name truncate">{user.name}</div>
