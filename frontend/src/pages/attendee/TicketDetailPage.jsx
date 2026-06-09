@@ -115,7 +115,7 @@ export default function TicketDetailPage() {
 
       <div className="app-content">
         <div className="page-wrap">
-          <div className="ticket-detail-grid">
+          <div className="ticket-detail-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 260px', gap: 20, alignItems: 'start' }}>
 
             {/* ── Left: Ticket details ── */}
             <div>

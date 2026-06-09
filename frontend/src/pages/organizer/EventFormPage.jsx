@@ -205,7 +205,7 @@ export default function EventFormPage() {
                 />
               </div>
 
-              <div className="form-row" style={{ position: 'relative' }}>
+              <div className="form-row" style={{ position: 'relative', zIndex: 10 }}>
                 <DateTimePicker
                   label="Sales open"
                   value={form.salesStart}

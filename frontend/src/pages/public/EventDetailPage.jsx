@@ -91,7 +91,7 @@ export default function EventDetailPage() {
         </div>
       )}
 
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 320px', gap: 24, alignItems: 'start' }}>
+      <div className="event-detail-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 320px', gap: 24, alignItems: 'start' }}>
         {/* ── Left column: event info ── */}
         <div>
           <div style={{ marginBottom: 24 }}>
@@ -157,7 +157,7 @@ export default function EventDetailPage() {
         </div>
 
         {/* ── Right column: booking panel ── */}
-        <div style={{ position: 'sticky', top: 16 }}>
+        <div className="event-detail-sticky" style={{ position: 'sticky', top: 16 }}>
           <div className="card">
             <div className="card-header">
               <span style={{ fontSize: 13, fontWeight: 600 }}>Book tickets</span>

@@ -83,8 +83,8 @@ export default function BrowsePage() {
   };
 
   return (
-    <div className="browse-wrap fade-in">
-      <div className="browse-header-pad">
+    <div style={{ maxWidth: 1100, margin: '0 auto', padding: '0 24px 80px' }} className="fade-in">
+      <div style={{ padding: '36px 0 0' }}>
         <PageHeader title="Browse Events" description="Explore upcoming events and grab your tickets." />
 
         <div className="filter-bar">

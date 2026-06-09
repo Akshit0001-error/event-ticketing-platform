@@ -64,7 +64,7 @@ export default function App() {
       <ThemeProvider>
         <AuthProvider>
           <ToastProvider>
-          <Routes>
+            <Routes>
 
             {/* ── Public layout (top navbar) ── */}
             <Route element={<PublicLayout />}>
@@ -105,8 +105,8 @@ export default function App() {
             {/* ── 404 ── */}
             <Route path="*" element={<NotFoundPage />} />
 
-          </Routes>
-        </ToastProvider>
+            </Routes>
+          </ToastProvider>
         </AuthProvider>
       </ThemeProvider>
     </BrowserRouter>

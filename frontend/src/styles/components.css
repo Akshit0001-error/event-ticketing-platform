@@ -14,9 +14,56 @@
   height: 100vh;
   z-index: 100;
   overflow: hidden;
+  transition: width 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 }
+
+/* ── Collapsed state ── */
+.sidebar.collapsed {
+  width: 56px;
+}
+/* Note: margin-left for app-main when collapsed is handled in global.css
+   via [data-sidebar-collapsed="true"] .app-main { margin-left: 56px } */
+.sidebar.collapsed .sidebar-logo-text,
+.sidebar.collapsed .sidebar-link-label,
+.sidebar.collapsed .sidebar-user-card-info,
+.sidebar.collapsed .sidebar-footer-label,
+.sidebar.collapsed .sidebar-signout-btn span.sidebar-link-label,
+.sidebar.collapsed .sidebar-section-label {
+  opacity: 0;
+  width: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  pointer-events: none;
+}
+.sidebar.collapsed .sidebar-user-card {
+  justify-content: center;
+  padding: var(--s3) 0;
+}
+.sidebar.collapsed .sidebar-footer-row {
+  justify-content: center;
+}
+.sidebar.collapsed .sidebar-signout-btn {
+  justify-content: center;
+}
+/* Collapsed logo row: hide mark, center the toggle button so it's always reachable */
+.sidebar.collapsed .sidebar-logo {
+  padding: 0;
+  justify-content: center;
+  gap: 0;
+}
+.sidebar.collapsed .sidebar-logo-mark {
+  display: none;
+}
+.sidebar.collapsed .sidebar-collapse-btn {
+  margin-left: 0;
+  width: 32px;
+  height: 32px;
+  border-color: var(--border-2);
+}
+
+/* ── Logo row ── */
 .sidebar-logo {
-  padding: 0 var(--s4);
+  padding: 0 var(--s3) 0 var(--s4);
   height: var(--topbar-h);
   border-bottom: 1px solid var(--border);
   display: flex;
@@ -28,6 +75,8 @@
   color: var(--text);
   flex-shrink: 0;
   letter-spacing: -0.2px;
+  min-width: 0;
+  overflow: visible;
 }
 .sidebar-logo-mark {
   width: 26px; height: 26px;
@@ -39,6 +88,88 @@
   border-radius: var(--r2);
   flex-shrink: 0;
 }
+.sidebar-logo-text {
+  flex: 1;
+  overflow: hidden;
+  white-space: nowrap;
+  transition: opacity 0.18s ease;
+  min-width: 0;
+}
+
+/* ── Collapse button ── */
+.sidebar-collapse-btn {
+  margin-left: auto;
+  flex-shrink: 0;
+  width: 24px; height: 24px;
+  display: flex; align-items: center; justify-content: center;
+  background: none;
+  border: 1px solid var(--border);
+  border-radius: var(--r2);
+  color: var(--text-3);
+  cursor: pointer;
+  transition: background var(--t-fast), color var(--t-fast), border-color var(--t-fast),
+              width 0.2s ease, height 0.2s ease, margin 0.2s ease;
+  padding: 0;
+  font-size: 14px;
+  line-height: 1;
+}
+.sidebar-collapse-btn:hover {
+  background: var(--surface-2);
+  color: var(--text);
+  border-color: var(--border-2);
+}
+.sidebar-collapse-icon {
+  display: inline-block;
+  transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  font-size: 16px;
+  line-height: 1;
+  transform: rotate(0deg);
+}
+.sidebar-collapse-icon.flipped {
+  transform: rotate(180deg);
+}
+
+/* Clicking the avatar while collapsed also expands */
+.sidebar.collapsed .sidebar-user-card {
+  cursor: pointer;
+}
+
+/* ── User card at top ── */
+.sidebar-user-card {
+  display: flex;
+  align-items: center;
+  gap: var(--s3);
+  padding: var(--s3) var(--s4);
+  border-bottom: 1px solid var(--border);
+  flex-shrink: 0;
+  transition: padding 0.25s ease;
+  overflow: hidden;
+}
+.sidebar-user-card-info {
+  min-width: 0;
+  flex: 1;
+  overflow: hidden;
+  transition: opacity 0.18s ease;
+}
+.sidebar-avatar {
+  width: 28px; height: 28px;
+  background: var(--accent-dim);
+  border: 1px solid rgba(0,212,180,0.25);
+  border-radius: var(--r2);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 11px; font-weight: 600;
+  color: var(--accent);
+  flex-shrink: 0;
+  transition: width 0.2s, height 0.2s, font-size 0.2s;
+}
+.sidebar-avatar-lg {
+  width: 32px; height: 32px;
+  font-size: 12px;
+}
+.sidebar-user-name { font-size: 13px; font-weight: 500; color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.sidebar-user-role { font-size: 10px; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.06em; }
+
+/* ── Nav section ── */
 .sidebar-section-label {
   font-size: 10px;
   font-weight: 600;
@@ -47,6 +178,9 @@
   color: var(--text-3);
   padding: 0 var(--s3);
   margin-bottom: 4px;
+  overflow: hidden;
+  white-space: nowrap;
+  transition: opacity 0.18s ease;
 }
 .sidebar-nav { flex: 1; overflow-y: auto; padding: var(--s3); }
 .sidebar-link {
@@ -63,6 +197,8 @@
   text-decoration: none;
   margin-bottom: 2px;
   user-select: none;
+  overflow: hidden;
+  white-space: nowrap;
 }
 .sidebar-link:hover    { background: var(--surface-2); color: var(--text); }
 .sidebar-link.active   { background: var(--accent-dim); color: var(--accent); font-weight: 500; }
@@ -74,34 +210,61 @@
   opacity: 0.6;
   flex-shrink: 0;
 }
+.sidebar-link-label {
+  overflow: hidden;
+  white-space: nowrap;
+  transition: opacity 0.18s ease;
+}
+
+/* ── Footer ── */
 .sidebar-footer {
   padding: var(--s3);
   border-top: 1px solid var(--border);
   flex-shrink: 0;
 }
-.sidebar-user {
-  display: flex; align-items: center; gap: var(--s2);
-  padding: var(--s2) var(--s2);
+.sidebar-footer-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 6px;
+}
+.sidebar-footer-label {
+  font-size: 11px;
+  color: var(--text-3);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-family: var(--font-mono);
+  overflow: hidden;
+  white-space: nowrap;
+  transition: opacity 0.18s ease;
+}
+.sidebar-signout-btn {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 7px var(--s3);
   border-radius: var(--r2);
+  background: none;
+  border: none;
+  color: var(--text-2);
+  font-size: 13px;
+  font-family: var(--font);
   cursor: pointer;
-  transition: background var(--t-fast);
+  transition: background var(--t-fast), color var(--t-fast);
+  text-align: left;
+  overflow: hidden;
+  white-space: nowrap;
 }
-.sidebar-user:hover { background: var(--surface-2); }
-.sidebar-avatar {
-  width: 28px; height: 28px;
-  background: var(--accent-dim);
-  border: 1px solid rgba(232,160,70,0.3);
-  border-radius: var(--r2);
-  display: flex; align-items: center; justify-content: center;
-  font-size: 11px; font-weight: 600;
-  color: var(--accent);
+.sidebar-signout-btn:hover { background: var(--error-bg); color: var(--error); }
+.sidebar-signout-icon {
+  font-size: 14px;
   flex-shrink: 0;
+  width: 18px;
+  text-align: center;
 }
-.sidebar-user-info { min-width: 0; flex: 1; }
-.sidebar-user-name { font-size: 13px; font-weight: 500; color: var(--text); }
-.sidebar-user-role { font-size: 10px; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.06em; }
 
-/* Mobile sidebar */
+/* ── Mobile sidebar ── */
 .sidebar-overlay {
   display: none;
   position: fixed; inset: 0;
@@ -110,10 +273,90 @@
   z-index: 99;
 }
 @media (max-width: 768px) {
-  .sidebar { transform: translateX(-100%); transition: transform 0.22s ease; }
-  .sidebar.open { transform: translateX(0); }
+  .sidebar { transform: translateX(-100%); transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1), width 0.25s ease; }
+  .sidebar.mobile-open { transform: translateX(0); }
   .sidebar-overlay.open { display: block; }
+  .sidebar.collapsed { width: var(--sidebar-w); }
+  .sidebar-collapse-btn { display: none; }
 }
+
+/* ── Logout confirmation overlay ── */
+.logout-confirm-overlay {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,0.65);
+  backdrop-filter: blur(4px);
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: fade-in 0.15s ease;
+}
+.logout-confirm-dialog {
+  background: var(--surface);
+  border: 1px solid var(--border-2);
+  border-radius: var(--r4);
+  padding: var(--s6) var(--s5);
+  width: 300px;
+  max-width: 90vw;
+  text-align: center;
+  box-shadow: var(--shadow-lg);
+  animation: slide-up 0.18s ease;
+}
+.logout-confirm-avatar {
+  width: 44px; height: 44px;
+  background: var(--accent-dim);
+  border: 2px solid rgba(0,212,180,0.3);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 16px; font-weight: 700;
+  color: var(--accent);
+  margin: 0 auto var(--s4);
+}
+.logout-confirm-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text);
+  margin: 0 0 6px;
+}
+.logout-confirm-sub {
+  font-size: 13px;
+  color: var(--text-2);
+  margin: 0 0 var(--s5);
+}
+.logout-confirm-actions {
+  display: flex;
+  gap: var(--s3);
+}
+.logout-confirm-cancel {
+  flex: 1;
+  padding: 9px 0;
+  border-radius: var(--r2);
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  color: var(--text-2);
+  font-size: 13px;
+  font-family: var(--font);
+  cursor: pointer;
+  transition: background var(--t-fast), color var(--t-fast);
+}
+.logout-confirm-cancel:hover { background: var(--surface-3); color: var(--text); }
+.logout-confirm-ok {
+  flex: 1;
+  padding: 9px 0;
+  border-radius: var(--r2);
+  background: var(--error-bg);
+  border: 1px solid rgba(248,113,113,0.3);
+  color: var(--error);
+  font-size: 13px;
+  font-weight: 500;
+  font-family: var(--font);
+  cursor: pointer;
+  transition: background var(--t-fast);
+}
+.logout-confirm-ok:hover { background: rgba(248,113,113,0.2); }
+
+@keyframes fade-in  { from { opacity: 0 } to { opacity: 1 } }
+@keyframes slide-up { from { transform: translateY(12px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
 
 /* ══════════════════ TOPBAR ══════════════════ */
 .topbar {
@@ -651,6 +894,26 @@ textarea.input { resize: vertical; min-height: 80px; }
 .qr-image { width: 200px; height: 200px; border-radius: var(--r2); }
 .qr-label { font-size: 11px; color: var(--text-3); text-align: center; font-family: var(--font-mono); }
 
+/* Ticket detail QR panel */
+.qr-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: var(--r3);
+  padding: var(--s5);
+  gap: var(--s3);
+  min-height: 200px;
+  justify-content: center;
+}
+.qr-wrapper img {
+  width: 200px;
+  height: 200px;
+  border-radius: var(--r2);
+  display: block;
+}
+
 /* ══════════════════ MISC ══════════════════ */
 .kbd {
   display: inline-flex; align-items: center;
@@ -798,273 +1061,46 @@ textarea.input { resize: vertical; min-height: 80px; }
 }
 .dtp-footer { display: flex; gap: 6px; }
 
-/* ══════════════════════════════════════════════════════════════════
-   MOBILE RESPONSIVE — comprehensive overrides for ≤768px
-   (and some ≤480px for very small phones)
-══════════════════════════════════════════════════════════════════ */
-@media (max-width: 768px) {
-
-  /* ── Page structure ── */
-  .app-content { padding: var(--s3) var(--s3) var(--s6); }
-  .page-wrap   { max-width: 100%; }
-
-  /* ── Page header: stack title + actions ── */
-  .page-header {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: var(--s3);
-    padding-bottom: var(--s4);
-    margin-bottom: var(--s4);
+/* ══════════════════ PAGE-LEVEL RESPONSIVE LAYOUTS ══════════════════ */
+/* Fix: EventDetailPage — stack info + booking panel on mobile */
+@media (max-width: 860px) {
+  .event-detail-grid {
+    grid-template-columns: 1fr !important;
   }
-  .page-header-actions {
-    width: 100%;
-    flex-wrap: wrap;
+  .event-detail-sticky {
+    position: static !important;
   }
-  .page-header-actions .btn { flex: 1; justify-content: center; min-width: 120px; }
-
-  /* ── Tables → card-list on mobile ── */
-  .table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
-  .table { min-width: 520px; }
-  /* Each row becomes a mini-card when table is too wide */
-  .table-mobile-stack thead { display: none; }
-  .table-mobile-stack tbody tr {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 6px;
-    padding: var(--s3);
-    border-bottom: 1px solid var(--border);
-    background: var(--surface);
-  }
-  .table-mobile-stack tbody td {
-    border: none;
-    padding: 2px 0;
-    font-size: 13px;
-  }
-
-  /* ── Filter bar ── */
-  .filter-bar { flex-direction: column; align-items: stretch; gap: var(--s2); }
-  .search-input-wrap { max-width: 100%; }
-  .filter-bar .btn  { width: 100%; justify-content: center; }
-
-  /* ── Forms: 2-col → 1-col ── */
-  .form-row { grid-template-columns: 1fr; }
-
-  /* ── Cards ── */
-  .card-header {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: var(--s2);
-  }
-  .card-header .btn { align-self: flex-start; }
-
-  /* ── Stat grid: 2×2 on mobile ── */
-  .stat-grid { grid-template-columns: repeat(2, 1fr) !important; }
-  .stat-cell-value { font-size: 20px; }
-
-  /* ── Events grid: single column ── */
-  .events-grid { grid-template-columns: 1fr; }
-
-  /* ── Modal: full-width bottom sheet ── */
-  .modal-overlay {
-    align-items: flex-end;
-    padding: 0;
-  }
-  .modal {
-    max-width: 100%;
-    width: 100%;
-    border-radius: var(--r4) var(--r4) 0 0;
-    padding: var(--s5) var(--s4) calc(var(--s5) + env(safe-area-inset-bottom));
-    animation: slideUpSheet 0.22s ease;
-  }
-  @keyframes slideUpSheet {
-    from { transform: translateY(100%); opacity: 0.6; }
-    to   { transform: translateY(0);   opacity: 1;   }
-  }
-  .modal-actions { flex-direction: column-reverse; }
-  .modal-actions .btn { width: 100%; justify-content: center; }
-
-  /* ── Logout confirm dialog ── */
-  .logout-confirm-dialog { width: calc(100% - 32px); }
-
-  /* ── Toast: full width at bottom ── */
-  .toast-container {
-    bottom: calc(var(--s3) + env(safe-area-inset-bottom));
-    right: var(--s3);
-    left: var(--s3);
-    align-items: stretch;
-  }
-  .toast { max-width: 100%; }
-
-  /* ── Pagination: smaller buttons ── */
-  .pagination { flex-wrap: wrap; gap: 4px; padding: var(--s3) 0; }
-  .page-btn   { min-width: 36px; height: 36px; }
-
-  /* ── QR code: bigger on mobile (easier to scan) ── */
-  .qr-image { width: 240px; height: 240px; }
-  .qr-container { padding: var(--s4); }
-
-  /* ── Order summary: larger text for readability ── */
-  .order-total-value { font-size: 26px; }
-
-  /* ── Validation result ── */
-  .validation-result { padding: var(--s4); }
-  .validation-icon   { font-size: 36px; }
-  .validation-status { font-size: 18px; }
-
-  /* ── Auth pages: tighter padding ── */
-  .auth-wrap { padding: var(--s4) var(--s3); align-items: flex-start; padding-top: var(--s7); }
-  .auth-card { max-width: 100%; }
-
-  /* ── Topbar ── */
-  .topbar { padding: 0 var(--s3); }
-  .topbar-title { font-size: 13px; }
-
-  /* ── Ticket type selector ── */
-  .tt-option { flex-direction: column; align-items: flex-start; gap: var(--s2); }
-  .tt-option-price { font-size: 16px; }
-
-  /* ── Ticket type form items ── */
-  .tt-form-item .form-row { grid-template-columns: 1fr; }
 }
 
-/* ── Very small phones (≤400px) ── */
-@media (max-width: 400px) {
-  .app-content { padding: var(--s2) var(--s2) var(--s6); }
-  h1 { font-size: 20px; }
-  .stat-cell { padding: var(--s3); }
-  .stat-cell-value { font-size: 18px; }
-  .page-btn { min-width: 32px; height: 32px; font-size: 11px; }
-  .btn { font-size: 13px; padding: 7px 12px; }
-  .btn-lg { font-size: 14px; padding: 10px 18px; }
-}
-
-/* ── Dashboard inline grids (JS inline styles can't be targeted by class,
-      so we use a helper class to apply responsive grid) ── */
-.dash-kpi-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 14px;
-  margin-bottom: 20px;
-}
-.dash-chart-grid {
-  display: grid;
-  grid-template-columns: 1fr 340px;
-  gap: 14px;
-  margin-bottom: 20px;
-}
-@media (max-width: 768px) {
-  .dash-kpi-grid   { grid-template-columns: repeat(2, 1fr); gap: 10px; }
-  .dash-chart-grid { grid-template-columns: 1fr; }
-}
-@media (max-width: 400px) {
-  .dash-kpi-grid { grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 12px; }
-}
-
-/* ══════════════════════════════════════════════════════════════════
-   MISSING / ADDITIONAL COMPONENT STYLES
-══════════════════════════════════════════════════════════════════ */
-
-/* QR wrapper (used in TicketDetailPage) */
-.qr-wrapper {
-  background: var(--surface-2);
-  border: 1px solid var(--border);
-  border-radius: var(--r3);
-  padding: var(--s4);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: var(--s3);
-  text-align: center;
-  position: sticky;
-  top: var(--s4);
-}
-.qr-wrapper img {
-  width: 200px;
-  height: 200px;
-  border-radius: var(--r2);
-  display: block;
-}
-
-/* Ticket detail 2-col layout */
-.ticket-detail-grid {
-  display: grid;
-  grid-template-columns: 1fr 280px;
-  gap: 20px;
-  align-items: start;
-}
-
-/* Browse page wrapper */
-.browse-wrap {
-  max-width: 1100px;
-  margin: 0 auto;
-  padding: 0 var(--s5) var(--s8);
-}
-.browse-header-pad { padding: var(--s6) 0 0; }
-
-/* Checkout wrapper */
-.checkout-wrap {
-  max-width: 520px;
-  margin: 0 auto;
-  padding: var(--s6) var(--s5) var(--s8);
-}
-.checkout-success {
-  max-width: 480px;
-  margin: 80px auto;
-  padding: 0 var(--s5);
-  text-align: center;
-}
-.checkout-success-actions {
-  display: flex;
-  gap: var(--s2);
-  justify-content: center;
-  flex-wrap: wrap;
-}
-
-/* Back button */
-.back-btn {
-  background: none;
-  border: none;
-  color: var(--text-2);
-  cursor: pointer;
-  font-size: 13.5px;
-  margin-bottom: var(--s5);
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  transition: color var(--t-fast);
-  padding: 0;
-  font-family: var(--font);
-}
-.back-btn:hover { color: var(--text); }
-
-/* Fade-in animation */
-.fade-in { animation: fadeIn 0.18s ease; }
-@keyframes fadeIn { from { opacity: 0 } to { opacity: 1 } }
-
-/* ══════════════════════════════════════════════════════════════════
-   ADDITIONAL MOBILE OVERRIDES
-══════════════════════════════════════════════════════════════════ */
-@media (max-width: 768px) {
-
-  /* Ticket detail: stack vertically, QR below info */
+/* Fix: TicketDetailPage — stack details + QR on mobile */
+@media (max-width: 700px) {
   .ticket-detail-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr !important;
   }
   .qr-wrapper {
-    position: static;  /* unstick on mobile */
+    padding: var(--s4);
   }
-  .qr-wrapper img { width: 220px; height: 220px; }
+  .qr-wrapper img {
+    width: 160px;
+    height: 160px;
+  }
+}
 
-  /* Browse page */
-  .browse-wrap { padding: 0 var(--s3) var(--s7); }
-  .browse-header-pad { padding: var(--s4) 0 0; }
+/* Fix: DashboardPage — KPI stat cards */
+@media (max-width: 900px) {
+  .dashboard-kpi-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+}
+@media (max-width: 500px) {
+  .dashboard-kpi-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
 
-  /* Checkout */
-  .checkout-wrap { padding: var(--s4) var(--s3) var(--s7); }
-  .checkout-success { margin: var(--s7) auto; padding: 0 var(--s3); }
-  .checkout-success-actions { flex-direction: column; }
-  .checkout-success-actions .btn { width: 100%; justify-content: center; }
-
-  /* Result count on filter bar */
-  .filter-result-count { display: none; }
+/* Fix: DashboardPage — charts row (bar + pie side by side) */
+@media (max-width: 860px) {
+  .dashboard-charts-grid {
+    grid-template-columns: 1fr !important;
+  }
 }
