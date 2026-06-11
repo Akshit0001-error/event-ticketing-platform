@@ -101,7 +101,7 @@ function DashboardVisual({ active }) {
           { name: 'Workshop: UI Design', tickets: '45 / 60',   status: 'draft' },
         ].map((ev, i) => (
           <div key={i} className="hp-mockup-event-row">
-            <div style={{ width: 28, height: 28, borderRadius: 6, background: `hsl(${i * 60 + 200},40%,20%)`, border: '1px solid rgba(255,255,255,0.07)', flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 12 }}>🎪</div>
+            <img src={`https://picsum.photos/seed/event${i}/28/28`} alt={ev.name} style={{ width: 28, height: 28, borderRadius: 6, objectFit: 'cover', flexShrink: 0 }} />
             <div style={{ flex: 1, minWidth: 0 }}>
               <div style={{ fontSize: 11, fontWeight: 600, color: 'var(--text)', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{ev.name}</div>
               <div style={{ fontSize: 10, color: 'var(--text-3)', fontFamily: 'var(--font-mono)' }}>{ev.tickets} tickets</div>
@@ -141,8 +141,7 @@ function TicketVisual({ active }) {
           { name: 'Startup Demo Day', date: '28 Jun', price: 'Free',  color: '#1a5c3d', emoji: '🚀' },
         ].map((t, i) => (
           <div key={i} className="hp-ticket-mini">
-            <div style={{ width: 32, height: 32, borderRadius: 8, background: t.color, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 16, marginBottom: 8, flexShrink: 0 }}>{t.emoji}</div>
-            <div style={{ fontSize: 12, fontWeight: 600, color: 'var(--text)', marginBottom: 3, lineHeight: 1.3 }}>{t.name}</div>
+<img src={`https://picsum.photos/seed/ticket${i}/64/64`} alt={t.name} style={{ width: 32, height: 32, borderRadius: 8, objectFit: 'cover', marginBottom: 8, flexShrink: 0 }} />            <div style={{ fontSize: 12, fontWeight: 600, color: 'var(--text)', marginBottom: 3, lineHeight: 1.3 }}>{t.name}</div>
             <div style={{ fontSize: 10, color: 'var(--text-3)', marginBottom: 6 }}>{t.date}</div>
             <div style={{ fontSize: 13, fontWeight: 700, color: 'var(--accent)', fontFamily: 'var(--font-mono)' }}>{t.price}</div>
           </div>
@@ -232,7 +231,7 @@ const HERO_SLIDES = [
   {
     id: 'organizer',
     eyebrow: 'For Event Organizers',
-    headline: <>Run Events.<br /><span className="hp-headline-accent">Not Spreadsheets.</span></>,
+    headline: <>Run Events.<br /><span className="hp-headline-accent">Not</span><br /><span style={{ color: 'var(--text)' }}>Spreadsheets.</span></>,
     sub: 'Create events, sell tickets, validate attendees with QR codes, and manage registrations — all from one modern platform.',
     ctas: [
       { label: 'Create Event', primary: true, to: '/login', arrow: true },
@@ -244,7 +243,7 @@ const HERO_SLIDES = [
   {
     id: 'attendee',
     eyebrow: 'For Attendees',
-    headline: <>Your Ticket,<br /><span className="hp-headline-accent">Instantly Delivered.</span></>,
+    headline: <>Your Ticket,<br /><span className="hp-headline-accent">Instantly</span><br /><span style={{ color: 'var(--text)' }}>Delivered.</span></>,
     sub: 'Book your spot at the best events in seconds. Pay securely, get your QR ticket by email, and walk straight in.',
     ctas: [
       { label: 'Browse Events', primary: true, to: '/browse', arrow: true },
@@ -256,8 +255,8 @@ const HERO_SLIDES = [
   {
     id: 'validate',
     eyebrow: 'For Event Staff',
-    headline: <>Gate Check<br /><span className="hp-headline-accent">Done in Seconds.</span></>,
-    sub: 'Scan QR codes with any smartphone. Prevent duplicates, track real-time attendance, and run a smooth entry experience.',
+     headline: <>Gate Check<br /><span className="hp-headline-accent">Done in</span><br /><span style={{ color: 'var(--text)' }}>Seconds.</span></>,   
+     sub: 'Scan QR codes with any smartphone. Prevent duplicates, track real-time attendance, and run a smooth entry experience.',
     ctas: [
       { label: 'Get Started Free', primary: true, to: '/register', arrow: true },
       { label: 'Learn More', primary: false, to: '/browse' },
