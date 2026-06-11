@@ -1,53 +1,53 @@
 /* ─────────────────────────────────────────────────────────────────
    variables.css — Design tokens for Ticket Platform
-   Theme: Deep space — midnight navy with cyan-to-violet gradient accent
+   Theme: Clean, editorial — off-white with indigo accent
 ───────────────────────────────────────────────────────────────── */
-@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=DM+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap');
 
 :root {
   /* --- Backgrounds --- */
-  --bg:        #08071a;
-  --surface:   #0f0d2a;
-  --surface-2: #161436;
-  --surface-3: #1e1c42;
+  --bg:        #f7f7f8;
+  --surface:   #ffffff;
+  --surface-2: #f2f2f4;
+  --surface-3: #e8e8ec;
 
-  /* --- Navbar (uses semi-transparent for frosted glass effect) --- */
-  --nav-bg: rgba(8, 7, 26, 0.88);
+  /* --- Navbar --- */
+  --nav-bg: rgba(247, 247, 248, 0.94);
 
   /* --- Borders --- */
-  --border:   #1e1c42;
-  --border-2: #2a2860;
+  --border:   #e4e4e8;
+  --border-2: #d0d0d8;
 
   /* --- Text --- */
-  --text:   #e8e6ff;
-  --text-2: #7b78b8;
-  --text-3: #413e7a;
+  --text:   #111118;
+  --text-2: #6b6b7a;
+  --text-3: #a0a0b0;
 
-  /* --- Accent (cyan → purple gradient; single-value fallback = cyan) --- */
-  --accent:       #00d4b4;
-  --accent-grad:  linear-gradient(135deg, #00d4b4 0%, #7c3aed 100%);
-  --accent-dim:   rgba(0, 212, 180, 0.12);
-  --accent-text:  #08071a;
+  /* --- Accent — indigo, single solid, no gradient --- */
+  --accent:      #4f46e5;
+  --accent-grad: #4f46e5;
+  --accent-dim:  rgba(79, 70, 229, 0.08);
+  --accent-text: #ffffff;
 
   /* --- Status --- */
-  --success:    #34d399;
-  --success-bg: rgba(52, 211, 153, 0.10);
-  --error:      #f87171;
-  --error-bg:   rgba(248, 113, 113, 0.10);
-  --warning:    #fbbf24;
-  --warning-bg: rgba(251, 191, 36, 0.10);
-  --info:       #60a5fa;
-  --info-bg:    rgba(96, 165, 250, 0.10);
+  --success:    #16a34a;
+  --success-bg: rgba(22, 163, 74, 0.08);
+  --error:      #dc2626;
+  --error-bg:   rgba(220, 38, 38, 0.08);
+  --warning:    #ca8a04;
+  --warning-bg: rgba(202, 138, 4, 0.08);
+  --info:       #2563eb;
+  --info-bg:    rgba(37, 99, 235, 0.08);
 
   /* --- Layout --- */
-  --sidebar-w:  230px;
-  --sidebar-bg: #06051a;
+  --sidebar-w:  224px;
+  --sidebar-bg: #ffffff;
   --topbar-h:   52px;
 
   /* --- Typography --- */
-  --font:         'Space Grotesk', 'DM Sans', sans-serif;
-  --font-mono:    'DM Mono', monospace;
-  --font-display: 'Space Grotesk', sans-serif;
+  --font:         'Inter', system-ui, -apple-system, sans-serif;
+  --font-mono:    'DM Mono', 'Fira Code', monospace;
+  --font-display: 'Inter', system-ui, sans-serif;
 
   /* --- Spacing (8-pt grid) --- */
   --s1: 4px;
@@ -63,12 +63,12 @@
   --r1: 3px;
   --r2: 6px;
   --r3: 10px;
-  --r4: 16px;
+  --r4: 14px;
 
-  /* --- Shadows --- */
-  --shadow-sm: 0 1px 4px rgba(0,0,0,0.6);
-  --shadow-md: 0 4px 20px rgba(0,0,0,0.65);
-  --shadow-lg: 0 8px 40px rgba(0,0,0,0.7);
+  /* --- Shadows — very subtle --- */
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+  --shadow-md: 0 4px 12px rgba(0,0,0,0.07), 0 2px 4px rgba(0,0,0,0.04);
+  --shadow-lg: 0 12px 32px rgba(0,0,0,0.10), 0 4px 8px rgba(0,0,0,0.05);
 
   /* --- Transitions --- */
   --t-fast: 0.12s ease;
@@ -76,42 +76,40 @@
 }
 
 /* ─────────────────────────────────────────────────────────────────
-   Light theme overrides — applied when <html data-theme="light">
+   Dark theme — applied when <html data-theme="dark">
 ───────────────────────────────────────────────────────────────── */
-[data-theme="light"] {
-  /* Backgrounds — clean cool white */
-  --bg:        #f6f5ff;
-  --surface:   #ffffff;
-  --surface-2: #eeecff;
-  --surface-3: #e4e1ff;
+[data-theme="dark"] {
+  --bg:        #0f0f13;
+  --surface:   #17171d;
+  --surface-2: #1e1e26;
+  --surface-3: #26262f;
 
-  /* Navbar */
-  --nav-bg: rgba(246, 245, 255, 0.92);
+  --nav-bg: rgba(15, 15, 19, 0.92);
 
-  /* Borders */
-  --border:   #dddaff;
-  --border-2: #c9c5f5;
+  --border:   #2a2a36;
+  --border-2: #38384a;
 
-  /* Text */
-  --text:   #0d0b2e;
-  --text-2: #5a5890;
-  --text-3: #9896c8;
+  --text:   #ededf0;
+  --text-2: #8888a0;
+  --text-3: #55556a;
 
-  /* Accent adjustments */
-  --accent-dim:  rgba(0, 212, 180, 0.14);
+  --accent:      #6366f1;
+  --accent-grad: #6366f1;
+  --accent-dim:  rgba(99, 102, 241, 0.12);
   --accent-text: #ffffff;
 
-  /* Status backgrounds */
-  --success-bg: rgba(52, 211, 153, 0.12);
-  --error-bg:   rgba(248, 113, 113, 0.12);
-  --warning-bg: rgba(251, 191, 36, 0.12);
-  --info-bg:    rgba(96, 165, 250, 0.12);
+  --success:    #22c55e;
+  --success-bg: rgba(34, 197, 94, 0.10);
+  --error:      #f87171;
+  --error-bg:   rgba(248, 113, 113, 0.10);
+  --warning:    #fbbf24;
+  --warning-bg: rgba(251, 191, 36, 0.10);
+  --info:       #60a5fa;
+  --info-bg:    rgba(96, 165, 250, 0.10);
 
-  /* Layout */
-  --sidebar-bg: #faf9ff;
+  --sidebar-bg: #111118;
 
-  /* Shadows */
-  --shadow-sm: 0 1px 3px rgba(60,40,180,0.07);
-  --shadow-md: 0 4px 14px rgba(60,40,180,0.09);
-  --shadow-lg: 0 8px 28px rgba(60,40,180,0.12);
+  --shadow-sm: 0 1px 4px rgba(0,0,0,0.4);
+  --shadow-md: 0 4px 16px rgba(0,0,0,0.45);
+  --shadow-lg: 0 12px 36px rgba(0,0,0,0.55);
 }

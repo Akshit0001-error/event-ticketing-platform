@@ -14,13 +14,12 @@ body {
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  transition: background var(--t-med), color var(--t-med);
 }
 
-/* Smooth theme transitions for all themed elements */
+/* Smooth theme transitions */
 *, *::before, *::after {
   transition-property: background-color, border-color, color, box-shadow;
-  transition-duration: 0.2s;
+  transition-duration: 0.18s;
   transition-timing-function: ease;
 }
 #root { height: 100%; }
@@ -35,10 +34,10 @@ body {
 a { color: inherit; text-decoration: none; }
 
 /* Headings */
-h1 { font-size: 24px; font-weight: 600; letter-spacing: -0.4px; line-height: 1.25; }
-h2 { font-size: 18px; font-weight: 600; letter-spacing: -0.3px; }
-h3 { font-size: 15px; font-weight: 600; }
-h4 { font-size: 11px; font-weight: 600; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.08em; }
+h1 { font-size: 22px; font-weight: 600; letter-spacing: -0.4px; line-height: 1.25; }
+h2 { font-size: 17px; font-weight: 600; letter-spacing: -0.2px; }
+h3 { font-size: 14px; font-weight: 600; }
+h4 { font-size: 11px; font-weight: 600; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.07em; }
 
 /* Utility classes */
 .mono    { font-family: var(--font-mono); }
@@ -80,7 +79,7 @@ h4 { font-size: 11px; font-weight: 600; color: var(--text-3); text-transform: up
   transition: margin-left 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 }
 [data-sidebar-collapsed="true"] .app-main {
-  margin-left: 56px;
+  margin-left: 52px;
 }
 .app-content {
   flex: 1;
@@ -103,10 +102,10 @@ h4 { font-size: 11px; font-weight: 600; color: var(--text-3); text-transform: up
 
 /* Fade-in animation */
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(6px); }
+  from { opacity: 0; transform: translateY(5px); }
   to   { opacity: 1; transform: translateY(0); }
 }
-.fade-in { animation: fadeIn 0.25s ease forwards; }
+.fade-in { animation: fadeIn 0.2s ease forwards; }
 
 /* Pulse for loading */
 @keyframes pulse {

@@ -14,15 +14,16 @@ export function ThemeProvider({ children }) {
   const [theme, setTheme] = useState(() => {
     const saved = localStorage.getItem(STORAGE_KEY);
     if (saved === 'light' || saved === 'dark') return saved;
-    // Respect OS preference on first visit
-    return window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+    // Default to light; respect OS preference only if it explicitly wants dark
+    return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
   });
 
   // Apply theme attribute to <html> whenever it changes
+  // Light is default (no attribute); dark gets data-theme="dark"
   useEffect(() => {
     const root = document.documentElement;
-    if (theme === 'light') {
-      root.setAttribute('data-theme', 'light');
+    if (theme === 'dark') {
+      root.setAttribute('data-theme', 'dark');
     } else {
       root.removeAttribute('data-theme');
     }
@@ -30,7 +31,7 @@ export function ThemeProvider({ children }) {
   }, [theme]);
 
   const toggle = useCallback(() => {
-    setTheme(t => (t === 'dark' ? 'light' : 'dark'));
+    setTheme(t => (t === 'light' ? 'dark' : 'light'));
   }, []);
 
   return (

@@ -33,13 +33,13 @@ import * as api from '../../api';
 
 // ─── Design tokens (re-used from variables.css) ───────────────────────────────
 const COLOR = {
-  accent:  '#00d4b4',
-  success: '#34d399',
-  info:    '#60a5fa',
-  error:   '#f87171',
-  muted:   'rgba(232,230,255,0.08)',
-  grid:    'rgba(232,230,255,0.06)',
-  text2:   '#7b78b8',
+  accent:  '#4f46e5',
+  success: '#16a34a',
+  info:    '#2563eb',
+  error:   '#dc2626',
+  muted:   'rgba(0,0,0,0.04)',
+  grid:    'rgba(0,0,0,0.05)',
+  text2:   '#6b6b7a',
 };
 
 const PIE_COLORS = [COLOR.accent, COLOR.info, COLOR.success, COLOR.error];
